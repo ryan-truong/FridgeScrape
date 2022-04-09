@@ -2,7 +2,10 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+import TypeWriter from './TypeWriter'
+
 export const HomeScreen = () => {
+
   return (
     <>
         <div className = 'container'>
@@ -12,10 +15,11 @@ export const HomeScreen = () => {
                 <div className = 'fridgescrape'>FridgeScrape</div>
             </div>
             <div className = 'formSpacing'>
+                <TypeWriter/>
                 <Form>
                     <Form.Group>
                         <div className = 'formWidth'>
-                            <Form.Control required type="text"> 
+                            <Form.Control required type="text">
                             </Form.Control>
                         </div>
                     </Form.Group>

@@ -48,6 +48,7 @@ body{
 
 .formSpacing{
     margin-top: 150px;
+    text-align: center;
 }
 
 .buttonContainer{
@@ -58,4 +59,8 @@ body{
     max-width: 625px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.typewriter{
+    margin-left: 200px;
 }
