@@ -16,6 +16,7 @@ export const HomeScreen = () => {
     const handleShow = () => setShow(true);
     const handleClose = () => {
         setShow(false);
+        window.location.reload();
     }
 
 
