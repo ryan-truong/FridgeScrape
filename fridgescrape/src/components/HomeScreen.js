@@ -28,7 +28,6 @@ export const HomeScreen = () => {
         e.preventDefault();
 
         /* Filter the ingredient list */
-        console.log(e.target.ingredients.value);
         const unfilteredIngredients = e.target.ingredients.value;
         const unfilteredIngredientArray = unfilteredIngredients.split(',');
         unfilteredIngredientArray.forEach(string => {
@@ -36,7 +35,6 @@ export const HomeScreen = () => {
                 unfilteredIngredientArray.push(string.replace(/\s/g, ''));
             }
          });
-        console.log(unfilteredIngredientArray);
         const filteredIngredients = unfilteredIngredientArray.filter((ingredients) => !ingredients.includes(' '));
 
         for(var i = 1;i< filteredIngredients.length; i++){
@@ -48,9 +46,7 @@ export const HomeScreen = () => {
             inputForAPI = inputForAPI + filteredIngredients[j];
         }
 
-        console.log('1')
         const response = await(API.getRecipes(inputForAPI));
-        console.log('2')
 
         const recipeIDArray = [];
         response.data.forEach((recipe) => recipeIDArray.push(recipe.id));
@@ -70,9 +66,7 @@ export const HomeScreen = () => {
             })
         })
 
-        console.log(3);
         handleShow();
-        console.log(4);
     }
 
     return (
@@ -105,7 +99,6 @@ export const HomeScreen = () => {
                 <Modal.Body>
                     <ListGroup>
                         {recipeLinks.map((link,index) => {
-                            console.log('running');
                             return(
                                 <a  key = {index} className = 'list-group-item' href = {link}>{recipeTitles[index]}</a>
                             )
