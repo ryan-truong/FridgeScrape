@@ -16,7 +16,6 @@ export const HomeScreen = () => {
     const handleShow = () => setShow(true);
     const handleClose = () => {
         setShow(false);
-        window.location.reload();
     }
 
 
@@ -33,43 +32,46 @@ export const HomeScreen = () => {
         const unfilteredIngredientArray = unfilteredIngredients.split(',');
         unfilteredIngredientArray.forEach(string => {
             if(string.includes(' ')){
-                console.log(string);
                 unfilteredIngredientArray.push(string.replace(/\s/g, ''));
             }
          });
         console.log(unfilteredIngredientArray);
         const filteredIngredients = unfilteredIngredientArray.filter((ingredients) => !ingredients.includes(' '));
-        console.log(filteredIngredients);
 
         for(var i = 1;i< filteredIngredients.length; i++){
             filteredIngredients[i] = ',+' + filteredIngredients[i];
         }
-        console.log(filteredIngredients);
 
         var inputForAPI = ''
         for(var j = 0; j< filteredIngredients.length; j++){
             inputForAPI = inputForAPI + filteredIngredients[j];
         }
-        console.log(inputForAPI);
 
+        console.log('1')
         const response = await(API.getRecipes(inputForAPI));
-        console.log(response);
+        console.log('2')
 
         const recipeIDArray = [];
         response.data.forEach((recipe) => recipeIDArray.push(recipe.id));
 
-        console.log(recipeIDArray);
 
         recipeIDArray.forEach(async (recipe) => {
-            console.log('1');
             const response2 = await(API.getRecipeLinks(recipe));
-            recipeLinks.push(response2.data.spoonacularSourceUrl);
-            recipeTitles.push(response2.data.title);
-            setRecipeLinks(recipeLinks);
-            setRecipeTitles(recipeTitles);
+            setRecipeLinks( (recipes) => {
+                const recipeLinks2 = JSON.parse(JSON.stringify(recipes));
+                recipeLinks2.push(response2.data.spoonacularSourceUrl);
+                return recipeLinks2
+            })
+            setRecipeTitles( (titles) => {
+                const recipeTitles2 = JSON.parse(JSON.stringify(titles));
+                recipeTitles2.push(response2.data.title);
+                return recipeTitles2;
+            })
         })
 
+        console.log(3);
         handleShow();
+        console.log(4);
     }
 
     return (
@@ -102,9 +104,9 @@ export const HomeScreen = () => {
                 <Modal.Body>
                     <ListGroup>
                         {recipeLinks.map((link,index) => {
-                            console.log(index);
+                            console.log('running');
                             return(
-                                <a  className = 'list-group-item' href = {link}>{recipeTitles[index]}</a>
+                                <a  key = {index} className = 'list-group-item' href = {link}>{recipeTitles[index]}</a>
                             )
                         })}
                     </ListGroup>
